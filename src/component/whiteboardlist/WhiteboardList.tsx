@@ -32,7 +32,7 @@ function createWhiteboard(whiteboardData: { name: string; userId: number }) {
 
 function getWhiteboardList(userId: string) {
   return fetch(`${API_SERVER_HOST}/v1/whiteboards?user-id=${userId}`).then(
-    (resposne) => resposne.json()
+    (resposne) => resposne.json(),
   );
 }
 
@@ -90,7 +90,7 @@ export const WhiteboardList: FC<WhiteboardListProps> = () => {
   }
 
   function go2Whiteboard(id: string) {
-    history.push(`/whiteboards/${id}`);
+    history.push(`/rooms/${id}`);
   }
 
   return (
@@ -136,8 +136,6 @@ const WhiteboardRow = styled(FlexDiv)`
   border-bottom-style: solid;
   padding: 1rem;
 `;
-
-const WhiteboardCell = styled.div``;
 
 const WhiteboardModalBox = styled.div`
   position: absolute;
