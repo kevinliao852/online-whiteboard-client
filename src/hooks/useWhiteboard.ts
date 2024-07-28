@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { createRef, useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
   changeStatus,
@@ -12,7 +12,7 @@ function useStatusChecker() {
     (status: WhiteBoardStatus) => {
       dispatch(changeStatus(status));
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function useStatusChecker() {
 
 function whiteboardWebSocket(id: string) {
   const ws = new WebSocket(
-    process.env.REACT_APP_WEBSOCKET_DRAW_HOST! + `/${id}`
+    process.env.REACT_APP_WEBSOCKET_DRAW_HOST! + `/${id}`,
   );
 
   ws.onerror = (event: Event) => {
@@ -70,11 +70,12 @@ function whiteboardWebSocket(id: string) {
 }
 
 export function useWhiteboardWebSocket(id: string) {
-  const _ = useStatusChecker();
+  useStatusChecker();
   const wsRef = useRef<WebSocket>();
+  const idRef = useRef<string>(id);
 
   useEffect(() => {
-    wsRef.current = whiteboardWebSocket(id);
+    wsRef.current = whiteboardWebSocket(idRef.current);
 
     return () => {
       if (wsRef.current) {

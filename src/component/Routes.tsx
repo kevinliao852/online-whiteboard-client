@@ -1,36 +1,24 @@
 import { Route, BrowserRouter } from "react-router-dom";
-import { Header } from "./common/Header";
-import { useAuthStatus } from "../hooks/useAuth";
-import { Dashboard } from "./whiteboard/Dashboard";
 import { Home } from "./home/Home";
 import { ProtectRoute } from "./common//ProtectRoute";
 import { WhiteboardList } from "./whiteboardlist/WhiteboardList";
+import { Nav } from "./nav/nav";
+import { RoomManagement } from "./roomManagement/RoomManagement";
+import { NotLoggedIn } from "./common/NotLoggedIn";
+import { Room } from "./room/room";
+import { NewWhiteboardList } from "./whiteboardlist/NewWhiteboardList";
 
 export const Routes = () => {
-  const authStatus = useAuthStatus();
-
   return (
     <BrowserRouter>
-      <Header />
+      <Nav />
       <Route path="/" exact component={Home} />
-      <Route path="/home" exact component={Home} />
-      <ProtectRoute
-        path="/whiteboardlist"
-        exact
-        component={WhiteboardList}
-        authStatus={authStatus}
-      />
-      <ProtectRoute
-        path="/dashboard"
-        exact
-        component={Dashboard}
-        authStatus={authStatus}
-      />
-      <ProtectRoute
-        path="/whiteboards/:id"
-        component={Dashboard}
-        authStatus={authStatus}
-      />
+      <ProtectRoute path="/home" exact component={Home} />
+      <ProtectRoute path="/room-management" exact component={RoomManagement} />
+      <Route path="/not-login" exact component={NotLoggedIn} />
+      <ProtectRoute path="/my" exact component={NewWhiteboardList} />
+      <ProtectRoute path="/rooms/:id" exact component={Room} />
+      <ProtectRoute path="/new-room" exact component={Room} />
     </BrowserRouter>
   );
 };
